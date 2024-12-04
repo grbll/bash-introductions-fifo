@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+fifo_file=/tmp/mytest.fifo
+
+trap 'rm -f "$fifo_file"' EXIT
+
+if [ ! -p "$fifo_file" ]; then
+    mkfifo "$fifo_file"
+fi
+
+while true; do
+    if read -r line <$fifo_file; then
+        if [[ "$line" == 'quit' ]]; then
+            break
+        fi
+        echo "$line"
+    fi
+done
+
+echo "exiting"

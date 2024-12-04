@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+fifo_file=/tmp/mytest.fifo
+
+if [[ ! -p "$fifo_file" ]]; then
+    echo "Reader not running!"
+fi
+
+if [[ "$1" ]]; then
+    echo "$1" >$fifo_file
+else
+    echo "$$ says hi!" >$fifo_file
+fi

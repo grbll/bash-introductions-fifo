@@ -8,13 +8,11 @@ if [ ! -p "$fifo_file" ]; then
     mkfifo "$fifo_file"
 fi
 
-while true; do
-    if read -r line <$fifo_file; then
-        if [[ "$line" == 'quit' ]]; then
-            break
-        fi
-        echo "$line"
+while read -r line<"$fifo_file"; do
+    if [[ "$line" == 'quit' ]]; then
+        break
     fi
+    echo "$line"
 done
 
 echo "exiting"
